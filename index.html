@@ -16,7 +16,7 @@ body.prestart .telemetry,body.prestart .camera-bar,body.prestart .mini-meta,body
 @media(max-width:640px){.topbar{left:10px;right:10px}.brand small{display:none}.graphics-note{top:62px;right:12px;font-size:8px}.intro{left:16px;right:16px;width:auto;max-width:340px;bottom:24px;top:auto;max-height:calc(100vh - 104px)}body.prestart .mission{display:none}.quality{max-width:90px}.loading .brand{margin-bottom:0}.loading{gap:10px}.boot-details pre{max-height:95px}}
 </style><script>/* Diagnóstico disponível antes da criação do motor gráfico. Não usa rede nem armazenamento local. */
 (function(){
- var B=window.SIM_BOOT={version:'9.0-realista-duplas-TMP-Dolly-MTM',ready:false,fatal:false,phase:'Preparando a página',logs:[],begin:Date.now(),mode:'auto'};
+ var B=window.SIM_BOOT={version:'10.1-realista-frota-por-modelo',ready:false,fatal:false,phase:'Preparando a página',logs:[],begin:Date.now(),mode:'auto'};
  B.log=function(message){B.logs.push(new Date().toISOString()+'  '+String(message));if(B.logs.length>35)B.logs.shift();var el=document.getElementById('bootReport');if(el)el.textContent=B.logs.join('\n');};
  B.stage=function(text,percent){B.phase=text;var t=document.getElementById('loadingText'),bar=document.getElementById('bootProgress');if(t)t.textContent=text;if(bar)bar.style.width=percent+'%';B.log(text);};
  B.fail=function(error){B.fatal=true;B.log(error&&error.stack?error.stack:error);var loading=document.getElementById('loading');if(loading)loading.classList.remove('hidden');var s=document.getElementById('spinner');if(s)s.style.display='none';var title=document.getElementById('loadingText');if(title)title.textContent='Não foi possível concluir a inicialização.';var detail=document.getElementById('loadingDetail');if(detail)detail.textContent='Tente o modo compatível. Se o navegador bloquear os gráficos, o modo de emergência funciona sem WebGL, com visual simplificado.';var actions=document.getElementById('bootActions');if(actions)actions.classList.remove('hidden');};
@@ -85,6 +85,34 @@ body:not(.tourMode) .mission{left:20px;top:83px;width:262px;padding:13px 15px;bo
 </style><style id="v7-styles">
 .cycle-premise{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}.cycle-premise span{font-size:11px;border:1px solid #56706466;background:#19372f;border-radius:7px;padding:9px 11px;color:#ccebdc}.cycle-premise strong{color:#fff}.mtm-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mtm-fields label{font-size:11px;color:#b6c7ce;display:flex;flex-direction:column;gap:7px}.mtm-fields input{background:#10232a;border:1px solid #486166;border-radius:6px;color:#eaf4ef;padding:10px;min-width:0;width:100%;font:inherit;user-select:text}.mtm-fields .checkbox{flex-direction:row;align-items:center;grid-column:1/-1}.mtm-fields .checkbox input{width:17px;min-width:17px}.timing-table{width:100%;border-collapse:collapse;user-select:text;font-size:11px}.timing-table td,.timing-table th{padding:9px 6px;border-bottom:1px solid #71867b33;text-align:left}.timing-table td:last-child,.timing-table th:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.timing-table .total{font-weight:700;color:#adf3d1}.metric-caption{font-size:10px;color:#a7bec7;margin:5px 0 14px}.report-actions{display:flex;gap:8px;margin:12px 0}.report-actions button{margin:0;width:auto;padding:9px 12px}.trip-box{border:1px solid #59787055;border-radius:8px;padding:12px;margin:12px 0;background:#172e30;color:#d4e9e3;font-size:12px;line-height:1.65}.trip-box strong{color:#ffc080}.source-note{font-size:10px;line-height:1.65;color:#b4c6cb;user-select:text}.reference-values{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0}.reference-values td,.reference-values th{padding:7px 4px;border-bottom:1px solid #74988b33;text-align:left}.report-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#storageTripPlan{font-size:11px;color:#b2d4c6;line-height:1.6;margin:10px 0}
 @media(max-width:620px){.mtm-fields{grid-template-columns:1fr}.cycle-premise{gap:5px}.cycle-premise span{font-size:10px;padding:7px}.timing-table{font-size:10px}.report-actions{flex-wrap:wrap}.reference-values{font-size:10px}}
+</style><style id="fleet-builder-styles">
+#fleetBuilder{padding:16px 17px;margin:0 0 18px;border:1px solid #769e8866;border-radius:10px;background:#18312d}
+#fleetBuilder .fleet-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:7px}
+#fleetBuilder h3{font-size:16px;font-weight:650;color:#e4f9ef;margin:0}
+#fleetTotal{font-size:11px;color:#b9e4d0;white-space:nowrap}
+#fleetBuilder .fleet-intro{font-size:11px;color:#abc5bc;margin:0 0 14px;line-height:1.5}
+#fleetControls{padding:0;border:0;margin:0;min-width:0}
+#fleetRows{display:grid;gap:12px}
+#fleetBuilder .fleet-row{display:grid;grid-template-columns:minmax(180px,1fr) 142px 74px;gap:12px;align-items:end}
+#fleetBuilder .fleet-model-label,#fleetBuilder .fleet-quantity-field>label{font-size:11px;color:#d7e8df;display:flex;flex-direction:column;gap:7px}
+#fleetBuilder .fleet-quantity-field>label{margin-bottom:7px}
+#fleetBuilder select{height:42px;font-size:12px}
+#fleetBuilder .fleet-stepper{display:flex;height:42px;border:1px solid #718f8466;border-radius:7px;overflow:hidden;background:#0e1a20}
+#fleetBuilder .fleet-stepper input{width:54px;min-width:0;min-height:0;border:0;border-radius:0;text-align:center;font-size:17px;font-weight:650;padding:0 3px;color:#ccffe8;appearance:textfield;-moz-appearance:textfield}
+#fleetBuilder .fleet-stepper input::-webkit-inner-spin-button,#fleetBuilder .fleet-stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#fleetBuilder .fleet-stepper button{flex:1;min-width:38px;border:0;background:#243e35;color:#d9f9e7;font-size:22px;padding:0}
+#fleetBuilder .fleet-stepper button:hover:not(:disabled){background:#365847}
+#fleetBuilder button:disabled{opacity:.35;cursor:default}
+#fleetBuilder .fleet-remove{height:42px;padding:0 8px;background:transparent;border:1px solid #97b1a53d;border-radius:7px;color:#c3d8cf;font-size:10px}
+#fleetBuilder .fleet-remove:hover:not(:disabled){border-color:#d4a289;color:#ffd5bd}
+#fleetBuilder .fleet-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:13px}
+#fleetAdd{border:1px solid #a5e7c588;border-radius:7px;color:#d2ffe8;background:#2a4d3d;padding:10px 14px;font-size:12px;font-weight:650;min-height:40px}
+#fleetBuilder .fleet-limit{font-size:10px;color:#9eb8ad}
+#fleetSummary{margin:13px 0 0;padding-top:12px;border-top:1px solid #8ba8973b;font-size:13px;font-weight:600;color:#f0c487;line-height:1.5}
+#fleetError{color:#ffd0ad;font-size:11px;line-height:1.5;margin:10px 0 0}
+#fleetBuilder input[aria-invalid=true]{outline:2px solid #ec9c70;outline-offset:-2px}
+@media(max-width:680px){#fleetBuilder{padding:13px}#fleetBuilder .fleet-heading{align-items:flex-start;flex-direction:column;gap:5px}#fleetBuilder .fleet-row{grid-template-columns:minmax(0,1fr) 74px;gap:9px;padding-bottom:12px;border-bottom:1px solid #849e8b33}#fleetBuilder .fleet-model-label{grid-column:1/-1}#fleetBuilder .fleet-quantity-field{max-width:170px}#fleetBuilder .fleet-row:last-child{border-bottom:0;padding-bottom:0}#fleetSummary{font-size:12px}}
+
 </style></head>
 <body class="prestart">
 <canvas id="view" aria-label="Cenário tridimensional interativo do armazém" tabindex="0"></canvas>
@@ -720,20 +748,90 @@ function vehicleTypeLabel(type,short=false){
  };
  return labels[type]||labels.reach;
 }
+const FLEET_LIMIT=5;
+let fleetRowSequence=0;
+function readFleetComposition(){
+ const rows=[...document.querySelectorAll('#fleetRows .fleet-row')].map((row,index)=>{
+  const type=row.querySelector('[data-fleet-model]').value;
+  const raw=row.querySelector('[data-fleet-quantity]').value.trim(),count=Number(raw);
+  if(!['reach','rx'].includes(type))throw Error('Escolha um modelo válido na linha '+(index+1)+'.');
+  if(!raw||!Number.isInteger(count)||count<1||count>FLEET_LIMIT)throw Error('Na linha '+(index+1)+', informe uma quantidade inteira de 1 a '+FLEET_LIMIT+'.');
+  return {type,count};
+ });
+ if(!rows.length)throw Error('Adicione pelo menos uma empilhadeira à frota.');
+ const total=rows.reduce((sum,row)=>sum+row.count,0);
+ if(total>FLEET_LIMIT)throw Error('A frota pode ter até '+FLEET_LIMIT+' empilhadeiras no total. Ajuste as quantidades.');
+ const types=rows.flatMap(row=>Array(row.count).fill(row.type));
+ return {rows,total,types,key:types.join('|')};
+}
+function refreshFleetBuilder(){
+ const root=document.getElementById('fleetBuilder');if(!root)return;
+ const rows=[...root.querySelectorAll('.fleet-row')];let plan=null;
+ const error=document.getElementById('fleetError');
+ try{plan=readFleetComposition();error.textContent='';error.hidden=true;}catch(e){error.textContent=e.message;error.hidden=false;}
+ document.getElementById('fleetTotal').textContent=plan?'Total: '+plan.total+(plan.total===1?' empilhadeira':' empilhadeiras'):'Verifique as quantidades';
+ const totals=new Map();if(plan)for(const row of plan.rows)totals.set(row.type,(totals.get(row.type)||0)+row.count);
+ document.getElementById('fleetSummary').textContent=plan?[...totals].map(([type,count])=>count+' '+(type==='reach'?'STILL FM-X':'STILL RX 20-16')).join(' + '):'';
+ const add=document.getElementById('fleetAdd');add.disabled=!plan||plan.total>=FLEET_LIMIT;
+ rows.forEach((row,index)=>{
+  const input=row.querySelector('[data-fleet-quantity]'),qty=Number(input.value),valid=input.value.trim()!==''&&Number.isInteger(qty)&&qty>=1&&qty<=FLEET_LIMIT;
+  input.setAttribute('aria-invalid',String(!valid));
+  row.querySelector('[data-fleet-action="minus"]').disabled=!valid||qty<=1;
+  row.querySelector('[data-fleet-action="plus"]').disabled=!plan||plan.total>=FLEET_LIMIT;
+  row.querySelector('[data-fleet-action="remove"]').disabled=rows.length===1;
+  row.querySelector('[data-fleet-model]').setAttribute('aria-label','Modelo da linha '+(index+1));
+  input.setAttribute('aria-label','Quantidade da linha '+(index+1));
+  for(const [action,label] of [['minus','Diminuir quantidade'],['plus','Aumentar quantidade'],['remove','Remover modelo']])row.querySelector('[data-fleet-action="'+action+'"]').setAttribute('aria-label',label+' da linha '+(index+1));
+ });
+}
+function addFleetRow(type='reach',count=1,focus=false){
+ const id=++fleetRowSequence,row=document.createElement('div');row.className='fleet-row';
+ row.innerHTML='<label class="fleet-model-label" for="fleetModel'+id+'">Modelo<select id="fleetModel'+id+'" data-fleet-model><option value="reach">STILL FM-X (retrátil)</option><option value="rx">STILL RX 20-16 / 6211</option></select></label>'+
+ '<div class="fleet-quantity-field"><label for="fleetQuantity'+id+'">Quantidade</label><div class="fleet-stepper"><button type="button" data-fleet-action="minus">−</button><input id="fleetQuantity'+id+'" data-fleet-quantity type="number" min="1" max="5" step="1" inputmode="numeric" aria-describedby="fleetError"><button type="button" data-fleet-action="plus">+</button></div></div>'+
+ '<button type="button" class="fleet-remove" data-fleet-action="remove">Remover</button>';
+ row.querySelector('[data-fleet-model]').value=type;row.querySelector('[data-fleet-quantity]').value=String(count);
+ document.getElementById('fleetRows').append(row);refreshFleetBuilder();
+ if(focus)row.querySelector('[data-fleet-model]').focus();
+}
+function bindFleetBuilder(){
+ const root=document.getElementById('fleetBuilder');if(!root||root.dataset.bound)return;root.dataset.bound='true';
+ addFleetRow();
+ root.addEventListener('input',refreshFleetBuilder);root.addEventListener('change',refreshFleetBuilder);
+ document.getElementById('fleetAdd').onclick=()=>{
+  if(document.getElementById('fleetControls').disabled)return;
+  let plan;try{plan=readFleetComposition();}catch(e){refreshFleetBuilder();return;}
+  if(plan.total>=FLEET_LIMIT)return;
+  const next=plan.rows[plan.rows.length-1].type==='reach'?'rx':'reach';addFleetRow(next,1,true);
+ };
+ document.getElementById('fleetRows').addEventListener('click',e=>{
+  const button=e.target.closest('[data-fleet-action]');if(!button||button.disabled||document.getElementById('fleetControls').disabled)return;
+  const row=button.closest('.fleet-row'),input=row.querySelector('[data-fleet-quantity]'),action=button.dataset.fleetAction;
+  if(action==='remove'){
+   if(document.querySelectorAll('#fleetRows .fleet-row').length<=1)return;
+   const target=row.nextElementSibling||row.previousElementSibling;row.remove();target?.querySelector('[data-fleet-model]').focus();
+  }else{
+   let plan;try{plan=readFleetComposition();}catch(e){refreshFleetBuilder();return;}
+   if(action==='plus'&&plan.total>=FLEET_LIMIT)return;
+   input.value=String(Math.max(1,Number(input.value)+(action==='plus'?1:-1)));
+  }
+  refreshFleetBuilder();
+ });
+}
 function configureFleet(){
  if(G.held)throw Error('Apoie a carga antes de alterar a frota.');
- const count=Number(document.getElementById('fleetCount').value),mode=document.getElementById('fleetType').value;
- if(fleet.length===count&&fleet.mode===mode)return;
+ const plan=readFleetComposition();
+ if(fleet.length===plan.total&&fleet.planKey===plan.key)return;
  if(fleet.length>1)throw Error('Reinicie o turno para alterar uma frota já posicionada.');
- G.vehicleType=mode==='rx'?'rx':'reach';G.vehicleName=vehicleTypeLabel(G.vehicleType,true)+' 01';
- fleet=[G];fleet.mode=mode;
- for(let i=1;i<count;i++){
-  const type=mode==='mixed'?(i%2?'rx':'reach'):mode;
+ G.vehicleType=plan.types[0];G.vehicleName=vehicleTypeLabel(G.vehicleType,true)+' 01';
+ fleet=[G];fleet.mode=new Set(plan.types).size>1?'mixed':plan.types[0];fleet.planKey=plan.key;
+ for(let i=1;i<plan.total;i++){
+  const type=plan.types[i];
   fleet.push({...G,x:-33.7,z:19+i*4.2,yaw:Math.PI,held:null,vehicleType:type,vehicleName:vehicleTypeLabel(type,true)+' '+String(i+1).padStart(2,'0')});
  }
  for(let i=0;i<fleet.length;i++)fleet[i].garage={x:-33.7,z:19+i*4.2,yaw:Math.PI};
  fleetIndex=0;
 }
+
 function selectFleet(index){if(!fleet.length)return;G=fleet[index%fleet.length];fleetIndex=index%fleet.length;}
 function updateTruck(r,g){
  if(!vehicleMeshes){const reach=truckParts;truckParts={};buildTruck(r,'rx');vehicleMeshes={reach,rx:truckParts};truckParts=reach;}
@@ -1019,7 +1117,14 @@ function extendSimAPI(){if(!window.__sim)return;let core=window.__sim.state;wind
 <nav class="storage-tabs" role="tablist" aria-label="Configurações da simulação"><button id="tabPlan" class="active" type="button" role="tab" data-storage-tab="plan" aria-controls="pagePlan" aria-selected="true">Planejamento</button><button id="tabArea" type="button" role="tab" data-storage-tab="area" aria-controls="pageArea" aria-selected="false" tabindex="-1">Ambiente e área</button><button id="tabResult" type="button" role="tab" data-storage-tab="result" aria-controls="pageResult" aria-selected="false" tabindex="-1">Acompanhamento</button></nav>
 <section id="pagePlan" class="storage-page" data-storage-page="plan" role="tabpanel" aria-labelledby="tabPlan">
 <div class="storage-availability" id="storageAvailability">Lendo pallets dos BOX…</div>
+<section id="fleetBuilder" aria-labelledby="fleetBuilderTitle">
+<div class="fleet-heading"><h3 id="fleetBuilderTitle">Frota de empilhadeiras</h3><span id="fleetTotal" aria-live="polite">Total: 1 empilhadeira</span></div>
+<p class="fleet-intro">Escolha os modelos e a quantidade de cada um para este ciclo.</p>
+<fieldset id="fleetControls" aria-labelledby="fleetBuilderTitle"><div id="fleetRows"></div><div class="fleet-actions"><button id="fleetAdd" type="button">+ Adicionar modelo</button><span class="fleet-limit">Até 5 empilhadeiras no total.</span></div></fieldset>
+<p id="fleetSummary" role="status" aria-live="polite"></p><p id="fleetError" role="alert" hidden></p>
+</section>
 <div class="storage-form main-setup">
+
 <label class="qty-label" for="storageQty">PALLETS PARA GUARDAR<div class="qty-row"><input id="storageQty" type="number" min="1" step="1" value="36" inputmode="numeric" aria-describedby="storageQueueNote"><button id="storageUseTotal" type="button">Usar todos</button></div><span class="field-hint">Quantidade total deste ciclo</span></label>
 <label for="storageSpeed">Reprodução<select id="storageSpeed"><option value="1">1× · tempo real</option><option value="2">2×</option><option value="5" selected>5×</option><option value="10">10×</option><option value="15">15×</option><option value="20">20×</option></select><span class="field-hint">Acelera a exibição, não altera a quantidade de paradas.</span></label>
 <p id="storageQueueNote" class="wide storage-note"></p>
@@ -1043,7 +1148,7 @@ function extendSimAPI(){if(!window.__sim)return;let core=window.__sim.state;wind
 <div class="stop-grid"><div class="stop-card"><h4>Pedestres</h4><div class="stop-fields"><label for="storagePedestrianCount">Quantas paradas<input id="storagePedestrianCount" type="number" min="0" max="9999" step="1" value="0" inputmode="numeric"></label><label for="storagePedestrianSeconds">Segundos por parada<input id="storagePedestrianSeconds" type="number" min="0.1" max="3600" step="0.1" value="5" inputmode="decimal"></label></div></div>
 <div class="stop-card"><h4>Outras interrupções</h4><div class="stop-fields"><label for="storageOtherCount">Quantas paradas<input id="storageOtherCount" type="number" min="0" max="9999" step="1" value="0" inputmode="numeric"></label><label for="storageOtherSeconds">Segundos por parada<input id="storageOtherSeconds" type="number" min="0.1" max="3600" step="0.1" value="10" inputmode="decimal"></label></div><label class="reason-field" for="storageOtherReason">Motivo<input id="storageOtherReason" type="text" maxlength="80" placeholder="Ex.: cruzamento, tráfego ou obstrução"></label></div></div>
 <div id="storageStopsSummary" class="stops-summary" aria-live="polite">Sem paradas programadas.</div><p class="storage-note">Use 0 para não programar paradas. A máquina para nas ruas e retoma o trajeto após o tempo definido. Pausas manuais, conferências da carga e bloqueios de proteção são separados dessas quantidades.</p></section>
-<details class="setup-details"><summary>Frota e critérios do cenário</summary><div class="storage-form"><label>Quantidade de empilhadeiras<select id="fleetCount"><option value="1">1 empilhadeira</option><option value="2">2 empilhadeiras</option><option value="3">3 empilhadeiras</option><option value="4">4 empilhadeiras</option><option value="5">5 empilhadeiras</option></select></label><label>Tipo de empilhadeira<select id="fleetType"><option value="reach">STILL FM-X (retrátil)</option><option value="rx">STILL RX 20-16 / 6211</option><option value="mixed">Mista · STILL FM-X + STILL RX 20-16 / 6211</option></select></label></div><p class="storage-note">Agora você escolhe diretamente a <b>quantidade</b> e o <b>tipo</b> da frota na janela de simulação. A distribuição continua alternada por viagem de até dois pallets: uma máquina opera por vez, enquanto as demais aguardam. Cada máquina retorna ao BOX e estaciona fora do acesso; esse deslocamento adicional entra no cálculo. Corredores de 3,3 m e último nível de 6,6 m no modelo atual. Modelos e capacidade de elevação demonstrativos. Uma frota já posicionada com mais de uma máquina exige reinício do turno para alteração.</p><p class="storage-premise"><b>Premissa mantida: sempre haverá posição livre para guardar.</b>A ocupação demonstrativa do destino escolhido é ajustada no planejamento. Os demais pallets continuam como obstáculos. O nível 1 é picking. Se não houver trajeto viável, a máquina para antes do obstáculo.</p><p class="storage-note">Transporte nominal de 8 km/h (ajustável para baixo), manobras com tempo próprio e Dolly como obstáculo físico. TMP incluído atrás dos BOX a partir da implantação do DXF. Tempos de cenário e estruturas demonstrativas, sem homologação de segurança.</p></details>
+<section class="setup-details fleet-criteria" aria-labelledby="fleetCriteriaTitle"><div class="section-title"><h3 id="fleetCriteriaTitle">Frota e critérios do cenário</h3></div><p class="storage-note">Monte a frota no início da aba Planejamento. Use <b>+ Adicionar modelo</b> e os botões <b>− / +</b> para definir a quantidade de cada modelo. Exemplo: <b>1 STILL FM-X + 1 STILL RX 20-16</b>. A distribuição continua alternada por viagem de até dois pallets: uma máquina opera por vez, enquanto as demais aguardam. Cada máquina retorna ao BOX e estaciona fora do acesso; esse deslocamento adicional entra no cálculo. Corredores de 3,3 m e último nível de 6,6 m no modelo atual. Modelos e capacidade de elevação demonstrativos. Uma frota já posicionada com mais de uma máquina exige reinício do turno para alteração.</p><p class="storage-premise"><b>Premissa mantida: sempre haverá posição livre para guardar.</b>A ocupação demonstrativa do destino escolhido é ajustada no planejamento. Os demais pallets continuam como obstáculos. O nível 1 é picking. Se não houver trajeto viável, a máquina para antes do obstáculo.</p><p class="storage-note">Transporte nominal de 8 km/h (ajustável para baixo), manobras com tempo próprio e Dolly como obstáculo físico. TMP incluído atrás dos BOX a partir da implantação do DXF. Tempos de cenário e estruturas demonstrativas, sem homologação de segurança.</p></section>
 
 </section>
 <section id="pageArea" class="storage-page hidden" data-storage-page="area" role="tabpanel" aria-labelledby="tabArea"><p class="storage-note">Informações de apoio e ajustes retirados da tela de operação. Alterar a iluminação ou a qualidade mantém o ciclo pausado enquanto esta janela estiver aberta.</p><div class="area-grid"><div id="storageBoxesHost"></div><div id="storageTimeHost"></div></div><div id="storageGraphics" class="storage-form"></div><div id="storageGraphicsNote" class="storage-note"></div><div id="storageAreaActions" class="area-actions"></div><details class="setup-details"><summary>Detalhes da posição e alinhamento</summary><div id="storagePositionHost"></div></details><p class="storage-note">Trocar o motor gráfico recarrega o arquivo e reinicia a sessão. O mapa CAD, as câmeras e os instrumentos permanecem na operação.</p></section>
@@ -1306,7 +1411,8 @@ window.storageSimulation = (()=>{
     $s('storageRun').disabled=busy||!!run;
     $s('storageRun').textContent=busy?'PLANEJANDO ROTA…':run?'SIMULAÇÃO EM ANDAMENTO':'INICIAR ARMAZENAGEM · ENTER';
     const manual=$s('storageDestination').value==='manual';$s('storageAddresses').disabled=!manual||!!run;$s('storagePick').disabled=!manual||!!run;
-    for(const id of ['storageQty','storageDestination','storageSource','fleetCount','fleetType',...timeInputIds,...stopInputIds,'storagePickLevel','storagePickClear'])$s(id).disabled=!!run||busy;
+    for(const id of ['storageQty','storageDestination','storageSource',...timeInputIds,...stopInputIds,'storagePickLevel','storagePickClear'])$s(id).disabled=!!run||busy;
+    $s('fleetControls').disabled=!!run||busy;refreshFleetBuilder();
     $s('storageSpeed').disabled=false;planSummary();
   }
   function open(){
@@ -1314,7 +1420,8 @@ window.storageSimulation = (()=>{
     if(tour.active)stopTour(false);
     modal('storageSetup',true);refreshSetup();setTab(run?'result':'plan');
     if(!run&&!lastResult)message('Pronto para simular. As posições escolhidas serão preparadas livres antes da guarda.');
-    render();requestAnimationFrame(()=>{if(!$s('storageSetup').classList.contains('hidden'))$s(run?'tabResult':'storageQty').focus({preventScroll:true});});
+    if(!run)$s('storageSetup').querySelector('.storage-setup-card').scrollTop=0;
+    render();requestAnimationFrame(()=>{if(!$s('storageSetup').classList.contains('hidden'))(run?$s('tabResult'):$s('fleetRows').querySelector('select')).focus({preventScroll:true});});
   }
   function close(){if(ready())modal('storageSetup',false);else $s('storageSetup').classList.add('hidden');if(ready())$s('view').focus();}
   function toAreaModal(id){close();modal(id,true);}
@@ -1743,7 +1850,7 @@ window.storageSimulation = (()=>{
     $s('storagePickCount').textContent=selected.size+' endereço(s) selecionado(s). Cada clique alterna uma posição.';
   }
   function bind(){
-    if(uiReady)return;uiReady=true;
+    if(uiReady)return;uiReady=true;bindFleetBuilder();
     document.querySelectorAll('[data-storage-tab]').forEach(b=>{b.onclick=()=>setTab(b.dataset.storageTab);b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[...document.querySelectorAll('[data-storage-tab]')],i=tabs.indexOf(b),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;setTab(tabs[next].dataset.storageTab);tabs[next].focus();});});
     $s('storageQty').addEventListener('input',()=>{qtyEdited=true;planSummary();});
     $s('storageUseTotal').onclick=()=>{qtyEdited=false;refreshSetup();};
