@@ -2414,21 +2414,23 @@ window.storageSimulation = (()=>{
 }
 </style>
 <style id="parallel-process-clock">
-#processClock{position:absolute;left:50%;transform:translateX(-50%);top:83px;width:340px;padding:13px 16px;border-radius:11px;border-color:#9cf3d26b;z-index:7;background:#10252ef2}
+/* Cronômetro compacto na lateral direita, abaixo da localização em telas amplas. */
+#processClock{position:absolute;left:auto;right:20px;transform:none;top:252px;width:200px;padding:9px 11px;border-radius:9px;border-color:#9cf3d26b;z-index:7;background:#10252ef2}
 .toast{top:auto!important;bottom:210px}
-.process-clock-top{display:flex;gap:8px;justify-content:space-between;align-items:center;font-size:8px;letter-spacing:.7px;color:#b9d1cb}
-#processState{font-size:9px;letter-spacing:0;color:#f2c48f;text-align:right}
-#processElapsed{display:block;font-size:42px;line-height:1.2;letter-spacing:1px;font-weight:650;color:#c2ffe6;font-variant-numeric:tabular-nums;margin:5px 0}
-#processSummary{font-size:10px;line-height:1.5;color:#b7cccf}
-#processFleet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
-#processFleet:not(:empty){margin-top:9px;padding-top:9px;border-top:1px solid #9cf3d230}
-.process-vehicle{pointer-events:auto;text-align:left;padding:6px 8px;background:#18323b;border:1px solid #668c8055;border-radius:5px;min-width:0}
-.process-vehicle b,.process-vehicle span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px}
-.process-vehicle span{margin-top:4px;font-size:8px;color:#9ec4b6}.process-vehicle.selected{border-color:#9cf3d2}.process-vehicle:disabled{opacity:1}
+.process-clock-top{display:flex;flex-direction:column;gap:3px;align-items:flex-start;font-size:8px;line-height:1.35;letter-spacing:.45px;color:#b9d1cb}
+#processState{font-size:8px;letter-spacing:0;color:#f2c48f;text-align:left}
+#processElapsed{display:block;font-size:26px;line-height:1.2;letter-spacing:.5px;font-weight:650;color:#c2ffe6;font-variant-numeric:tabular-nums;white-space:nowrap;margin:4px 0}
+#processSummary{font-size:9px;line-height:1.45;color:#b7cccf;overflow-wrap:anywhere}
+#processFleet{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;max-height:74px;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto;scrollbar-width:thin;scrollbar-color:#668c80 transparent}
+#processFleet:not(:empty){margin-top:6px;padding-top:6px;border-top:1px solid #9cf3d230}
+.process-vehicle{pointer-events:auto;text-align:left;padding:5px 6px;background:#18323b;border:1px solid #668c8055;border-radius:5px;min-width:0}
+.process-vehicle b,.process-vehicle span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px}
+.process-vehicle span{margin-top:3px;font-size:7px;color:#9ec4b6}.process-vehicle.selected{border-color:#9cf3d2}.process-vehicle:disabled{opacity:1}
 #processClock[data-status=completed]{border-color:#9cf3d2}
-@media(max-width:980px){#processClock{top:72px;width:calc(100% - 24px);left:12px;transform:none;padding:10px 13px}#processElapsed{font-size:34px;margin:2px 0}#processFleet{grid-template-columns:repeat(5,minmax(0,1fr))}#processFleet:not(:empty){margin-top:6px;padding-top:6px}body:not(.tourMode) .mission,body:not(.tourMode) #addressPanel{top:258px!important}#processFleet:has(.process-vehicle:nth-child(2)):not(:has(.process-vehicle:nth-child(3))){grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){#processClock{top:64px}#processFleet{grid-template-columns:repeat(3,minmax(0,1fr))}.process-vehicle{padding:5px}.process-vehicle b{font-size:8px}.process-vehicle span{font-size:7px}body:not(.tourMode) .mission{top:282px!important;width:calc(100% - 24px)!important}body:not(.tourMode) #addressPanel{display:none}.mission p{font-size:10px}.telemetry{bottom:50px}.camera-bar{bottom:157px}body.prestart #processClock{z-index:2}}
-@media(max-height:570px) and (min-width:521px){#processClock{left:auto;right:12px;top:64px;width:310px;transform:none}body:not(.tourMode) .mission{top:83px!important}body:not(.tourMode) #addressPanel{display:none}}
+@media(max-width:980px){#processClock{top:72px;right:12px;width:190px}body:not(.tourMode) .mission{top:83px!important}body:not(.tourMode) #addressPanel{top:258px!important}}
+@media(max-width:520px){#processClock{top:64px;width:170px;padding:8px 10px}#processElapsed{font-size:24px}body:not(.tourMode) .mission{top:282px!important;width:calc(100% - 24px)!important}body:not(.tourMode) #addressPanel{display:none}.mission p{font-size:10px}.telemetry{bottom:50px}.camera-bar{bottom:157px}body.prestart #processClock{z-index:2}}
+@media(max-height:680px) and (min-height:571px) and (min-width:981px){#processClock{top:83px;right:260px}}
+@media(max-height:570px) and (min-width:521px){#processClock{right:12px;top:64px;width:180px}body:not(.tourMode) .mission{top:83px!important}body:not(.tourMode) #addressPanel{display:none}}
 </style>
 <style>
 #rxControls{display:none;position:absolute;left:20px;top:286px;width:262px;padding:14px;border-radius:10px;pointer-events:auto}
